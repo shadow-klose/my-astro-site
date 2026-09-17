@@ -63,17 +63,19 @@ const slides = [
 </style>
 
 <script>
-  const box = document.querySelector(".carousel");
-  const track = box?.querySelector(".track");
-  const items = box?.querySelectorAll(".slide");
-  const prev = box?.querySelector(".prev");
-  const next = box?.querySelector(".next");
+  const initCarousel = () => {
+    const box = document.querySelector(".carousel") as HTMLElement;
+    if (!box) return; // ✅ 这回在函数里，合法了
+    const track = box.querySelector(".track") as HTMLElement;
+    const items = box.querySelectorAll(".slide") as NodeListOf<HTMLElement>;
+    const prev = box.querySelector(".prev") as HTMLElement | null;
+    const next = box.querySelector(".next") as HTMLElement | null;
 
-  if (box && track && items.length) {
     let i = 0;
     const go = () => {
       track.style.transform = `translateX(-${i * 100}%)`;
     };
+
     next?.addEventListener("click", () => {
       i = (i + 1) % items.length;
       go();
@@ -82,5 +84,7 @@ const slides = [
       i = (i - 1 + items.length) % items.length;
       go();
     });
-  }
+  };
+
+  initCarousel(); // 页面加载完就跑起来
 </script>
