@@ -1,0 +1,30 @@
+---
+const slides = [
+  { title: "第一张", desc: "从原生JS搬进 Astro 啦" },
+  { title: "第二张", desc: "改数组就能加幻灯片" },
+  { title: "第三张", desc: "明天加自动播放 + 圆点" },
+];
+---
+
+<div class="box">
+  <div style="display:flex; transition:transform .4s">
+    {
+      slides.map((s) => (
+        <div style="min-width:100%; padding:48px 20px; text-align:center">
+          <h3>{s.title}</h3>
+          <p>{s.desc}</p>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .box {
+    max-width: 640px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    margin: 2rem auto;
+  }
+</style>
