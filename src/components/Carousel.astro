@@ -1,30 +1,86 @@
 ---
 const slides = [
-  { title: "第一张", desc: "从原生JS搬进 Astro 啦" },
-  { title: "第二张", desc: "改数组就能加幻灯片" },
-  { title: "第三张", desc: "明天加自动播放 + 圆点" },
+  { title: "昨晚 push 成功那刻", desc: "红字砸两次都没跑" },
+  { title: "今早发现 nvm 不用 sudo", desc: "被要密码没硬刚，拐个弯" },
+  { title: "大连傍晚", desc: "最近天气好好啊" },
 ];
 ---
 
-<div class="box">
-  <div style="display:flex; transition:transform .4s">
+<div class="carousel">
+  <div class="track">
     {
       slides.map((s) => (
-        <div style="min-width:100%; padding:48px 20px; text-align:center">
+        <div class="slide">
           <h3>{s.title}</h3>
           <p>{s.desc}</p>
         </div>
       ))
     }
   </div>
+
+  <button class="prev">‹</button>
+  <button class="next">›</button>
 </div>
 
 <style>
-  .box {
+  .carousel {
+    position: relative;
     max-width: 640px;
+    margin: 2rem auto;
     overflow: hidden;
     border: 1px solid #e5e5e5;
     border-radius: 12px;
-    margin: 2rem auto;
+  }
+  .track {
+    display: flex;
+    transition: transform 0.4s ease;
+  }
+  .slide {
+    min-width: 100%;
+    padding: 48px 20px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    padding: 4px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .prev {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
   }
 </style>
+
+<script>
+  const box = document.querySelector(".carousel");
+  const track = box?.querySelector(".track");
+  const items = box?.querySelectorAll(".slide");
+  const prev = box?.querySelector(".prev");
+  const next = box?.querySelector(".next");
+
+  if (box && track && items.length) {
+    let i = 0;
+    const go = () => {
+      track.style.transform = `translateX(-${i * 100}%)`;
+    };
+    next?.addEventListener("click", () => {
+      i = (i + 1) % items.length;
+      go();
+    });
+    prev?.addEventListener("click", () => {
+      i = (i - 1 + items.length) % items.length;
+      go();
+    });
+  }
+</script>
